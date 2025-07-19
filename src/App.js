@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+// In src/main.jsx or App.jsx
+import './index.css'; // or './App.css' depending on where you wrote the tailwind directives
 
 function App() {
   return (
