@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WeatherCard from './components/WeatherCard';
-import { Sun, Moon, CloudFog } from 'lucide-react'; // Icon imports
+import { Sun, Moon, CloudFog } from 'lucide-react';
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState("Today");
+  const tabs = ["Today", "Hourly", "Daily", "Radar", "Monthly"];
+
   const sunMoonData = {
     sunrise: "5:24 AM",
     sunset: "7:01 PM",
@@ -20,6 +23,25 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 font-inter antialiased">
+      {/* Tabs */}
+      <div className="max-w-6xl mx-auto mb-6">
+        <div className="flex gap-4">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-200 ${
+                activeTab === tab
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-700 hover:bg-blue-100"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Main container */}
       <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl p-6 md:p-8 flex flex-col lg:flex-row gap-6">
 
