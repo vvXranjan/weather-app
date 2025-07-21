@@ -24,22 +24,25 @@ L.Icon.Default.mergeOptions({
 // Component to change map view
 const ChangeMapView = ({ coords }) => {
   const map = useMap();
+
   useEffect(() => {
     if (coords) {
       map.setView([coords.lat, coords.lng], 8);
     }
-  }, [coords]);
+  }, [coords, map]); // ✅ include map as a dependency
+
   return null;
 };
 
 const MapWeather = () => {
-  const [position, setPosition] = useState({ lat: 28.6139, lng: 77.209 }); // Default: Delhi
+  const [position, setPosition] = useState({ lat: 28.6139, lng: 77.2090 }); // Default: Delhi
   const [weather, setWeather] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch weather when position updates
+  // Fetch weather data when position updates
   useEffect(() => {
     if (!position.lat || !position.lng) return;
+
     const fetchWeather = async () => {
       try {
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${position.lat}&longitude=${position.lng}&current=temperature_2m,wind_speed_10m,relative_humidity_2m&timezone=auto`;
@@ -50,6 +53,7 @@ const MapWeather = () => {
         console.error("Weather fetch error:", error);
       }
     };
+
     fetchWeather();
   }, [position]);
 
@@ -57,6 +61,7 @@ const MapWeather = () => {
   const handleSearch = async () => {
     const provider = new OpenStreetMapProvider();
     const results = await provider.search({ query: searchTerm });
+
     if (results.length > 0) {
       const { x: lng, y: lat } = results[0];
       setPosition({ lat, lng });
@@ -72,14 +77,25 @@ const MapWeather = () => {
           placeholder="Search Location"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ padding: "5px", width: "200px" }}
+          style={{ padding: "6px", width: "200px", borderRadius: "4px", border: "1px solid #ccc" }}
         />
-        <button onClick={handleSearch} style={{ marginLeft: "5px" }}>
+        <button
+          onClick={handleSearch}
+          style={{
+            marginLeft: "8px",
+            padding: "6px 10px",
+            backgroundColor: "#007BFF",
+            color: "#fff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer"
+          }}
+        >
           Search
         </button>
       </div>
 
-      {/* Map */}
+      {/* Map Display */}
       <MapContainer
         center={[position.lat, position.lng]}
         zoom={5}

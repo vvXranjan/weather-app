@@ -1,29 +1,82 @@
-import "leaflet/dist/leaflet.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* External Library CSS */
+import "leaflet/dist/leaflet.css";
+import "leaflet-control-geocoder/dist/Control.Geocoder.css";
+
+/* Global Body Style with Cloud Background */
+body {
+  background-image: url('/assets/clouds.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Glass-like Card */
+.bg-blur-white {
+  @apply bg-white/40 backdrop-blur-md rounded-2xl shadow-xl p-6;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Tabs Container */
 .tabs-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1.5rem;
   border-bottom: 1px solid #ccc;
+  justify-content: center;
+  padding: 0.5rem 1rem;
 }
 
+/* Tab Button Styles */
 .tab-button {
-  background: none;
+  background: rgba(255, 255, 255, 0.4);
   border: none;
-  padding: 10px 16px;
+  padding: 10px 20px;
   cursor: pointer;
   font-size: 16px;
-  color: #555;
+  color: #333;
+  border-radius: 10px;
   position: relative;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .tab-button.active {
   color: #000;
   font-weight: bold;
+  background: rgba(255, 255, 255, 0.9);
   border-bottom: 3px solid #007BFF;
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.15);
+}
+
+/* Responsive Tweaks */
+@media (max-width: 640px) {
+  .tab-button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
 }
